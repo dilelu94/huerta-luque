@@ -270,43 +270,55 @@
     }
 
     /* ----------------------------------------------------
-       HOJA 3: 4 MINI CARTELITOS DE VARIEDADES (2x2 GRID)
+       HOJA 3: 4 MINI CARTELITOS HORIZONTALES PARA ZIPLOCK
     ---------------------------------------------------- */
     .page-mini-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 8mm;
-      padding: 8mm;
-    }
-
-    .mini-card {
-      border: 2px dashed #777777;
-      border-radius: 16px;
-      padding: 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      text-align: center;
+      gap: 5mm;
+      padding: 6mm;
+    }
+
+    .mini-card-horizontal {
+      border: 2px dashed #555555;
+      border-radius: 14px;
+      padding: 14px 20px;
       position: relative;
       background: #ffffff;
+      height: 62mm;
+      display: flex;
+      align-items: center;
     }
 
     .cut-line-badge {
       position: absolute;
       top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 20px;
       background: #ffffff;
       padding: 0 8px;
-      font-size: 0.85rem;
-      color: #777777;
-      font-weight: 600;
+      font-size: 0.8rem;
+      color: #555555;
+      font-weight: 700;
+    }
+
+    .mini-card-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 15px;
     }
 
     .mini-icon {
-      font-size: 3.5rem;
-      margin-bottom: 5px;
+      font-size: 3.8rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .mini-content {
+      flex: 1;
+      text-align: left;
     }
 
     .mini-title {
@@ -314,26 +326,35 @@
       font-weight: 900;
       color: #1b4332;
       text-transform: uppercase;
+      margin-bottom: 4px;
       line-height: 1.1;
-      margin-bottom: 6px;
     }
 
     .mini-desc {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 600;
       color: #333333;
-      line-height: 1.2;
-      margin-bottom: 12px;
+      line-height: 1.25;
     }
 
     .mini-price-tag {
       background: #1b4332;
       color: #ffffff;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 900;
-      padding: 8px 12px;
-      border-radius: 10px;
-      letter-spacing: 1px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      text-align: center;
+      line-height: 1.1;
+      flex-shrink: 0;
+    }
+
+    .mini-price-tag small {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffda6a;
+      margin-top: 3px;
     }
 
     /* Print settings */
@@ -366,7 +387,7 @@
   <div class="no-print-bar">
     <div>
       <h2>🖨️ Carteles Imprimibles (3 Hojas A4)</h2>
-      <p style="font-size: 0.9rem; color: #a3e635;">1: Precios | 2: QR Ahorro Tinta | 3: Mini Cartelitos (4 por hoja)</p>
+      <p style="font-size: 0.9rem; color: #a3e635;">1: Precios | 2: QR Ahorro Tinta | 3: Mini Carteles Horizontales (Ziplock)</p>
     </div>
     <button class="btn-print" onclick="window.print()"> Imprimir Todos (A4)</button>
   </div>
@@ -432,44 +453,72 @@
   </div>
 
   <!-- ====================================================
-       HOJA 3: 4 MINI CARTELITOS POR HOJA (PARA CORTAR)
+       HOJA 3: 4 MINI CARTELITOS HORIZONTALES PARA ZIPLOCK
        ==================================================== -->
   <div class="a4-page page-mini-cards">
     
-    <!-- Mini Card 1 -->
-    <div class="mini-card">
-      <span class="cut-line-badge">✂️ Cortar por acá</span>
-      <div class="mini-icon">🍅</div>
-      <div class="mini-title">Tomate Reliquia</div>
-      <div class="mini-desc">Variedad antigua de sabor dulce e intenso. ¡El sabor a tomate de verdad!</div>
-      <div class="mini-price-tag">$2.500 /u (3x $7.500)</div>
+    <!-- Mini Card 1 (Horizontal) -->
+    <div class="mini-card-horizontal">
+      <span class="cut-line-badge">✂️ Recortar para bolsa Ziplock</span>
+      <div class="mini-card-inner">
+        <div class="mini-icon">🍅</div>
+        <div class="mini-content">
+          <div class="mini-title">Tomate Reliquia</div>
+          <div class="mini-desc">Variedad antigua de sabor dulce e intenso. ¡El sabor a tomate de verdad!</div>
+        </div>
+        <div class="mini-price-tag">
+          $2.500
+          <small>3x $7.500</small>
+        </div>
+      </div>
     </div>
 
-    <!-- Mini Card 2 -->
-    <div class="mini-card">
-      <span class="cut-line-badge">✂️ Cortar por acá</span>
-      <div class="mini-icon">🍅</div>
-      <div class="mini-title">Mini Kumato</div>
-      <div class="mini-desc">Estilo Cherry oscurito, súper dulzón. ¡Ideal para comer directo de la planta!</div>
-      <div class="mini-price-tag">$2.500 /u (3x $7.500)</div>
+    <!-- Mini Card 2 (Horizontal) -->
+    <div class="mini-card-horizontal">
+      <span class="cut-line-badge">✂️ Recortar para bolsa Ziplock</span>
+      <div class="mini-card-inner">
+        <div class="mini-icon">🍅</div>
+        <div class="mini-content">
+          <div class="mini-title">Mini Kumato (Cherry)</div>
+          <div class="mini-desc">Estilo Cherry oscurito, súper dulzón. ¡Ideal para comer directo de la planta!</div>
+        </div>
+        <div class="mini-price-tag">
+          $2.500
+          <small>3x $7.500</small>
+        </div>
+      </div>
     </div>
 
-    <!-- Mini Card 3 -->
-    <div class="mini-card">
-      <span class="cut-line-badge">✂️ Cortar por acá</span>
-      <div class="mini-icon">🌶️</div>
-      <div class="mini-title">Ajíes Variados</div>
-      <div class="mini-desc">Variedad de ajíes picantes y dulces de varios colores. ¡Sanos y fuertes!</div>
-      <div class="mini-price-tag">$2.500 /u (3x $7.500)</div>
+    <!-- Mini Card 3 (Horizontal) -->
+    <div class="mini-card-horizontal">
+      <span class="cut-line-badge">✂️ Recortar para bolsa Ziplock</span>
+      <div class="mini-card-inner">
+        <div class="mini-icon">🌶️</div>
+        <div class="mini-content">
+          <div class="mini-title">Ajíes Variados</div>
+          <div class="mini-desc">Variedad de ajíes picantes y dulces de varios colores. ¡Sanos y fuertes!</div>
+        </div>
+        <div class="mini-price-tag">
+          $2.500
+          <small>3x $7.500</small>
+        </div>
+      </div>
     </div>
 
-    <!-- Mini Card 4 -->
-    <div class="mini-card">
-      <span class="cut-line-badge">✂️ Cortar por acá</span>
-      <div class="mini-icon">🫑</div>
-      <div class="mini-title">Morrones Caseros</div>
-      <div class="mini-desc">Morrón dulce de huerta. Excelente rendimiento y gran sabor.</div>
-      <div class="mini-price-tag">$2.500 /u (3x $7.500)</div>
+    <!-- Mini Card 4 (Horizontal) -->
+    <div class="mini-card-horizontal">
+      <span class="cut-line-badge">✂️ Recortar para bolsa Ziplock</span>
+      <div class="mini-card-inner">
+        <div class="mini-icon">🫑</div>
+        <div class="mini-content">
+          <div class="mini-title">Morrón Rojo</div>
+          <div class="mini-desc">Morrón rojo dulce de huerta. Excelente rendimiento y gran sabor.</div>
+        </div>
+        <div class="mini-price-tag">
+          $2.500
+          <small>3x $7.500</small>
+        </div>
+      </div>
     </div>
 
   </div>

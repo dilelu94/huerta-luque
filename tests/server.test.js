@@ -34,7 +34,7 @@ describe('HuertaHogare-a Server Tests', () => {
     expect(res.text).toContain('7.500');
     expect(res.text).toContain('11.000');
     expect(res.text).toContain('Mini Kumato');
-    expect(res.text).toContain('Morrones Caseros');
-    expect(res.text).toContain('Cortar por acá');
+    expect(res.text).toContain('Morrón Rojo');
+    expect(res.text).toContain('Ziplock');
   });
 });
