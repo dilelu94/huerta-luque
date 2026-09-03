@@ -26,12 +26,15 @@ describe('HuertaHogare-a Server Tests', () => {
     expect(res.text).toContain('tierra o maceta grande');
   });
 
-  it('GET /carteles.html debe responder con los carteles listos para imprimir', async () => {
+  it('GET /carteles.html debe responder con los carteles listos para imprimir (3 hojas A4)', async () => {
     const res = await request(app).get('/carteles.html');
     expect(res.status).toBe(200);
     expect(res.text).toContain('PLANTINES');
     expect(res.text).toContain('2.500');
     expect(res.text).toContain('7.500');
     expect(res.text).toContain('11.000');
+    expect(res.text).toContain('Mini Kumato');
+    expect(res.text).toContain('Morrones Caseros');
+    expect(res.text).toContain('Cortar por acá');
   });
 });
