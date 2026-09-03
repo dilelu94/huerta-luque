@@ -23,6 +23,7 @@ describe('HuertaHogare-a Server Tests', () => {
     expect(res.status).toBe(200);
     expect(res.text).toContain('5491127504590');
     expect(res.text).toContain('6 horas de sol directo');
+    expect(res.text).toContain('tierra o maceta grande');
   });
 
   it('GET /carteles.html debe responder con los carteles listos para imprimir', async () => {
