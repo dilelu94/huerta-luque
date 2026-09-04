@@ -26,7 +26,7 @@ describe('HuertaHogare-a Server Tests', () => {
     expect(res.text).toContain('tierra o maceta grande');
   });
 
-  it('GET /carteles.html debe responder con los carteles listos para imprimir (3 hojas A4)', async () => {
+  it('GET /carteles.html debe responder con los carteles listos para imprimir (medidas Ziplock 15.5 x 8 cm)', async () => {
     const res = await request(app).get('/carteles.html');
     expect(res.status).toBe(200);
     expect(res.text).toContain('PLANTINES');
