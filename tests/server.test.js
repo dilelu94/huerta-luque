@@ -16,6 +16,7 @@ describe('HuertaHogare-a Server Tests', () => {
     expect(res.text).toContain('Tomate Reliquia');
     expect(res.text).toContain('Tomate Kumato');
     expect(res.text).toContain('Ajíes Variados');
+    expect(res.text).toContain('Morrón Rojo');
   });
 
   it('GET / debe incluir el enlace directo al WhatsApp 5491127504590', async () => {
