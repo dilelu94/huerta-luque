@@ -19,7 +19,7 @@
 
 ### Repositorio del Proyecto Huerta Hogareña:
 * **Ubicación Local:** `/var/home/dilelu/repos/HuertaLuque`
-* **Repositorio GitHub:** `https://github.com/dilelu94/HuertaHogare-a` (rama principal: `main`)
+* **Repositorio GitHub:** `https://github.com/dilelu94/huerta-luque` (rama principal: `main`)
 * **Ubicación en el Servidor (OCI):** `/home/ubuntu/huerta-hogarea`
 * **Proceso PM2 en Servidor:** `huerta-app` (Puerto local `8085`).
 
