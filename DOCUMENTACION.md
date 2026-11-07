@@ -6,10 +6,10 @@
 
 ## 📌 1. RESUMEN DEL PROYECTO
 
-* **Nombre del Emprendimiento:** Huerta Hogareña
+* **Nombre del Emprendimiento:** Huerta Hogareña (Huerta Luque)
 * **Propósito:** Venta barrial directa de plantines de huerta (Tomates Reliquia, Mini Kumato Cherry, Ajíes Variados y Morrón Rojo) mediante cartel en la calle con código QR.
-* **URL en vivo:** `https://granjaluque.duckdns.org/plantines/`
-* **URL de carteles imprimibles:** `https://granjaluque.duckdns.org/plantines/carteles.html`
+* **URL en vivo:** `https://huertaluque.duckdns.org/`
+* **URL de carteles imprimibles:** `https://huertaluque.duckdns.org/carteles.html`
 * **WhatsApp de contacto:** `+5491127504590` (Formato local: `11 2750-4590`).
 * **Tono de comunicación:** Informal, cercano, vecino, casero y en singular (ej. *"Tengo plantines"*, *"Escribime por WhatsApp"*). **Queda prohibido el uso de lenguaje corporativo o plurales ("nosotros", "envianos")**.
 
@@ -18,7 +18,7 @@
 ## 📂 2. UBICACIÓN DE CÓDIGO Y REPOSITORIOS
 
 ### Repositorio del Proyecto Huerta Hogareña:
-* **Ubicación Local:** `/var/home/dilelu/repos/HuertaHogare-a`
+* **Ubicación Local:** `/var/home/dilelu/repos/HuertaLuque`
 * **Repositorio GitHub:** `https://github.com/dilelu94/HuertaHogare-a` (rama principal: `main`)
 * **Ubicación en el Servidor (OCI):** `/home/ubuntu/huerta-hogarea`
 * **Proceso PM2 en Servidor:** `huerta-app` (Puerto local `8085`).
@@ -35,34 +35,32 @@
 
 * **Proveedor Cloud:** Oracle Cloud Infrastructure (OCI).
 * **IP del Servidor:** `129.80.59.99`
+* **Dominio Huerta:** `huertaluque.duckdns.org`
+* **Dominio Granja:** `granjaluque.duckdns.org`
 * **Usuario SSH:** `ubuntu`
 * **Llave SSH:** `~/.ssh/granja`
-* **Servidor Web / Reverse Proxy:** Nginx (`/etc/nginx/sites-available/granja`).
+* **Servidor Web / Reverse Proxy:** Nginx (`/etc/nginx/sites-available/huerta` y `/etc/nginx/sites-available/granja`).
 
-### Configuración de Nginx para `/plantines/`:
+### Configuración de Nginx para Huerta Luque (`/etc/nginx/sites-available/huerta`):
 ```nginx
 server {
-    server_name granjaluque.duckdns.org;
+    server_name huertaluque.duckdns.org;
 
-    # El bloque /plantines/ DEBE ir antes de location /
-    location /plantines/ {
-        proxy_pass http://localhost:8085/;
+    location / {
+        proxy_pass http://localhost:8085;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
-        add_header Service-Worker-Allowed '/plantines/' always;
-        add_header Clear-Site-Data '"cache"' always;
     }
 
-    location / {
-        proxy_pass http://localhost:8080;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/huertaluque.duckdns.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/huertaluque.duckdns.org/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 }
 ```
 
