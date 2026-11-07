@@ -20,8 +20,8 @@
 ### Repositorio del Proyecto Huerta Hogareña:
 * **Ubicación Local:** `/var/home/dilelu/repos/HuertaLuque`
 * **Repositorio GitHub:** `https://github.com/dilelu94/huerta-luque` (rama principal: `main`)
-* **Ubicación en el Servidor (OCI):** `/home/ubuntu/huerta-hogarea`
-* **Proceso PM2 en Servidor:** `huerta-app` (Puerto local `8085`).
+* **Ubicación en el Servidor (OCI):** `/home/ubuntu/huertaluque`
+* **Proceso PM2 en Servidor:** `huertaluque` (Puerto local `8085`).
 
 ### Repositorio Principal (Granja Luque):
 * **Ubicación Local:** `/var/home/dilelu/repos/Granja`
@@ -124,6 +124,6 @@ npm test
 ### Despliegue Manual a Servidor OCI:
 ```bash
 cd /var/home/dilelu/repos/HuertaLuque
-scp -i ~/.ssh/granja index.html styles.css carteles.html server.js tests/server.test.js ubuntu@129.80.59.99:/home/ubuntu/huerta-hogarea/
-ssh -i ~/.ssh/granja ubuntu@129.80.59.99 "pm2 restart huerta-app"
+scp -i ~/.ssh/granja index.html styles.css carteles.html server.js tests/server.test.js ubuntu@129.80.59.99:/home/ubuntu/huertaluque/
+ssh -i ~/.ssh/granja ubuntu@129.80.59.99 "pm2 restart huertaluque"
 ```

@@ -1,52 +1,65 @@
-name: CD (Deploy to Oracle Server)
+name: CI/CD Pipeline (Test & Deploy to Oracle Cloud)
 
 on:
   push:
     branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
-  deploy:
-    runs-on: self-hosted
+  # 1. Ejecución de tests obligatorios
+  test:
+    name: Run Automated Tests
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Use Node.js 22.x
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22.x
-        cache: 'npm'
+      - name: Setup Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm ci || npm install
 
-    - name: Deploy files to production directory
-      run: |
-        rsync -av --delete \
-          --exclude='node_modules' \
-          --exclude='.git' \
-          ./ /home/ubuntu/huerta-hogarea/
+      - name: Run automated test suite
+        run: npm test
 
-    - name: Install production dependencies and restart via PM2
-      run: |
-        cd /home/ubuntu/huerta-hogarea
-        npm install --omit=dev
-        pm2 restart huerta-app || pm2 start server.js --name huerta-app --env production
-        pm2 save
+  # 2. Despliegue automático a OCI (solo tras pasar los tests y en pushes a main/master)
+  deploy:
+    name: Deploy to OCI (huertaluque)
+    needs: test
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
 
-    - name: Configure Nginx location block for /plantines
-      run: |
-        sudo tee /etc/nginx/snippets/plantines.conf > /dev/null << 'EOF'
-        location /plantines/ {
-            proxy_pass http://localhost:8085/;
-            proxy_http_version 1.1;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_cache_bypass $http_upgrade;
-        }
-        EOF
-        # Incluir el snippet en el config de granjaluque si no está ya incluido
-        if ! grep -q 'plantines.conf' /etc/nginx/sites-available/granjaluque.duckdns.org 2>/dev/null; then
-          sudo sed -i '/server_name granjaluque.duckdns.org/a\\n    include /etc/nginx/snippets/plantines.conf;' /etc/nginx/sites-available/granjaluque.duckdns.org
-        fi
-        sudo nginx -t && sudo systemctl reload nginx
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.OCI_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ secrets.OCI_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Sync files to OCI (/home/ubuntu/huertaluque)
+        run: |
+          rsync -avz --delete \
+            --exclude='node_modules' \
+            --exclude='.git' \
+            --exclude='.github' \
+            ./ ${{ secrets.OCI_USER }}@${{ secrets.OCI_HOST }}:/home/ubuntu/huertaluque/
+
+      - name: Install production dependencies & Restart PM2
+        run: |
+          ssh ${{ secrets.OCI_USER }}@${{ secrets.OCI_HOST }} << 'EOF'
+            set -e
+            cd /home/ubuntu/huertaluque
+            npm install --omit=dev
+            pm2 restart huertaluque || pm2 start server.js --name huertaluque --env production
+            pm2 save
+          EOF

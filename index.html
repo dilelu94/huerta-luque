@@ -6,7 +6,7 @@
     <title>Plantines para tu Huerta</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script>
       if ('serviceWorker' in navigator) {
@@ -21,15 +21,20 @@
 <body>
     <header class="hero">
         <div class="hero-content">
-            <h1>Plantines de Huerta Casera 🌱</h1>
-            <p>En cada temporada siembro plantines de más para asegurarme tener suficiente para trasplantar a tierra. Como prendieron todos con una fuerza bárbara, ofrezco los que me quedaron de más (están sanísimos) para que se aprovechen en el barrio y no se desperdicien.</p>
-            <a href="#contacto" class="btn-primary">Quiero un plantín</a>
+            <span class="hero-eyebrow">🌱 Huerta Urbana & Casera</span>
+            <h1>Plantines para tu Huerta🌱</h1>
+            <p>En cada temporada siembro plantines de más para asegurarme tener suficiente para trasplantar a tierra. Como prendieron todos con una fuerza bárbara, ofrezco los que me quedaron de más (están sanísimos) para que se aprovechen y no se desperdicien.</p>
+            <div class="hero-actions">
+                <a href="#contacto" class="btn-primary">Quiero un plantín</a>
+                <a href="#variedades" class="btn-ghost">Ver disponibles ↓</a>
+            </div>
         </div>
     </header>
 
     <main>
-        <section class="varieties">
+        <section id="variedades" class="varieties">
             <div class="section-header">
+                <span class="section-tag">Variedades de temporada</span>
                 <h2>Plantines listos para llevar</h2>
                 <p>Plantas sanas que me sobraron de mi siembra, ideales para trasplantar directo a tu huerta o maceta.</p>
             </div>
@@ -38,10 +43,14 @@
                 <!-- Tomate Reliquia -->
                 <div class="card">
                     <div class="card-img-wrapper">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Capay_heirloom_tomatoes_at_Slow_Food_Nation.jpg/960px-Capay_heirloom_tomatoes_at_Slow_Food_Nation.jpg" alt="Tomate Reliquia">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Capay_heirloom_tomatoes_at_Slow_Food_Nation.jpg/960px-Capay_heirloom_tomatoes_at_Slow_Food_Nation.jpg" alt="Tomate Reliquia" loading="lazy">
                     </div>
                     <div class="card-body">
-                        <span class="stock-badge available">✅ 5 disponibles</span>
+                        <div class="card-status">
+                            <span class="stock-badge available">
+                                <span class="badge-dot"></span> 5 disponibles
+                            </span>
+                        </div>
                         <h3>Tomate Reliquia</h3>
                         <p>Variedades antiguas con ese sabor dulce e intenso a tomate de verdad. Espectaculares para ensaladas.</p>
                     </div>
@@ -50,10 +59,14 @@
                 <!-- Tomate Kumato -->
                 <div class="card">
                     <div class="card-img-wrapper">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Kumato_04.jpg/960px-Kumato_04.jpg" alt="Tomate Mini Kumato Cherry">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Kumato_04.jpg/960px-Kumato_04.jpg" alt="Tomate Mini Kumato Cherry" loading="lazy">
                     </div>
                     <div class="card-body">
-                        <span class="stock-badge available">✅ 5 disponibles</span>
+                        <div class="card-status">
+                            <span class="stock-badge available">
+                                <span class="badge-dot"></span> 5 disponibles
+                            </span>
+                        </div>
                         <h3>Tomate Mini Kumato (Cherry)</h3>
                         <p>Estilo Cherry chiquitos, de color oscurito y un sabor bien dulce e intenso. ¡Ideales para comer directo de la planta o en ensaladas!</p>
                     </div>
@@ -62,10 +75,14 @@
                 <!-- Ajíes Variados -->
                 <div class="card out-of-stock">
                     <div class="card-img-wrapper">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Madame_Jeanette_and_other_chillies.jpg/960px-Madame_Jeanette_and_other_chillies.jpg" alt="Ajíes Variados">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Madame_Jeanette_and_other_chillies.jpg/960px-Madame_Jeanette_and_other_chillies.jpg" alt="Ajíes Variados" loading="lazy">
                     </div>
                     <div class="card-body">
-                        <span class="stock-badge out">❌ Sin stock (0)</span>
+                        <div class="card-status">
+                            <span class="stock-badge out">
+                                <span class="badge-dot"></span> Sin stock (0)
+                            </span>
+                        </div>
                         <h3>Ajíes Variados</h3>
                         <p>Variedad de ajíes dulces y picantes. Por el momento no quedaron unidades listas.</p>
                     </div>
@@ -74,10 +91,14 @@
                 <!-- Morrón Rojo -->
                 <div class="card out-of-stock">
                     <div class="card-img-wrapper">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Red_bell_pepper.jpg" alt="Morrón Rojo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Red_bell_pepper.jpg" alt="Morrón Rojo" loading="lazy">
                     </div>
                     <div class="card-body">
-                        <span class="stock-badge out">❌ Sin stock (0)</span>
+                        <div class="card-status">
+                            <span class="stock-badge out">
+                                <span class="badge-dot"></span> Sin stock (0)
+                            </span>
+                        </div>
                         <h3>Morrón Rojo</h3>
                         <p>Morrón rojo dulce de huerta. Por ahora sin stock de esta tanda.</p>
                     </div>
@@ -86,7 +107,10 @@
 
             <!-- Sección discreta de encargos al fondo -->
             <div class="custom-orders">
-                <h3>🌱 ¿Buscás aromáticas o verduras de hoja por encargo?</h3>
+                <div class="custom-orders-header">
+                    <span class="custom-orders-icon">🌱</span>
+                    <h3>¿Buscás aromáticas o verduras de hoja por encargo?</h3>
+                </div>
                 <p>Puedo germinarte a pedido tandas chiquitas si no tenés apuro:</p>
                 <div class="custom-orders-tags">
                     <span class="order-tag">🌿 Albahaca</span>
@@ -99,18 +123,21 @@
 
         <section class="care-section">
             <div class="care-content">
-                <h2>Cuidarlos es una pavada 🪴</h2>
-                <p>No hace falta saber nada de jardinería. Los plantines ya están fuertes, literal es solo plantarlo y regarlo:</p>
+                <span class="section-tag section-tag-light">Guía simple de huerta</span>
+                <h2>Cuidarlos es una pavada</h2>
+                <p class="care-lead">No hace falta saber nada de jardinería. Los plantines ya están fuertes, literal es solo plantarlo y regarlo:</p>
                 
                 <div class="steps-grid">
                     <div class="step">
+                        <span class="step-num">01</span>
                         <div class="step-icon">🪴</div>
-                        <h4>1. Plantar</h4>
+                        <h4>Plantar</h4>
                         <p>Pasalo a tierra o maceta grande en un lugar donde reciba al menos 6 horas de sol directo al día.</p>
                     </div>
                     <div class="step">
+                        <span class="step-num">02</span>
                         <div class="step-icon">💧</div>
-                        <h4>2. Regar</h4>
+                        <h4>Regar</h4>
                         <p>Mantené la tierra húmeda sin ahogarlo. ¡Y listo, la planta hace todo sola!</p>
                     </div>
                 </div>
