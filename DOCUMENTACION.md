@@ -1,6 +1,7 @@
 # 🌿 DOCUMENTACIÓN TÉCNICA Y OPERATIVA - HUERTA HOGAREÑA
 
-> **Este documento contiene toda la información técnica, de infraestructura, rutas, soluciones de red y precios del proyecto Huerta Hogareña para consumo de desarrolladores y asistentes de Inteligencia Artificial.**
+> ⚠️ **REGLA MANDATORIA PARA DESARROLLADORES Y ASISTENTES DE IA:**  
+> **ESTE DOCUMENTO DEBE ACTUALIZARSE OBLIGATORIAMENTE ANTE CUALQUIER CAMBIO EN EL PROYECTO** (arquitectura, infraestructura, workflows CI/CD, procesos PM2, paletas, rutas o reglas de negocio). Nunca dar por finalizada una tarea sin reflejar los cambios aquí.
 
 ---
 
@@ -112,7 +113,7 @@ El archivo `carteles.html` genera **4 Hojas A4** diseñadas para impresión dire
 
 ---
 
-## 🧪 7. PRUEBAS AUTOMÁTICAS Y COMANDOS
+## 🧪 7. PRUEBAS AUTOMÁTICAS Y CI/CD (AUTO-DEPLOY)
 
 ### Ejecutar Tests Locales:
 ```bash
@@ -121,9 +122,28 @@ npm test
 ```
 *(Utiliza Vitest + Supertest para validar endpoints `/health`, `/`, `/carteles.html`, stock de tomates y variedades).*
 
-### Despliegue Manual a Servidor OCI:
+### Pipeline Automatizado en GitHub Actions (`.github/workflows/deploy.yml`):
+El repositorio cuenta con auto-deploy automatizado mediante GitHub Actions:
+1. **Fase 1 (`Run Automated Tests`):** Corre `npm test` en `ubuntu-latest`. Si algún test falla, el pipeline se detiene inmediatamente y **no** despliega.
+2. **Fase 2 (`Deploy to OCI`):** Se ejecuta solo tras aprobar los tests (`needs: test`) en ramas `main`/`master`. Conecta por SSH usando los secrets del repositorio (`OCI_HOST`, `OCI_USER`, `OCI_SSH_KEY`), sincroniza los archivos en `/home/ubuntu/huertaluque/` vía `rsync` y reinicia el proceso con `pm2 restart huertaluque`.
+
+### Despliegue Manual de Contingencia a Servidor OCI:
 ```bash
 cd /var/home/dilelu/repos/HuertaLuque
 scp -i ~/.ssh/granja index.html styles.css carteles.html server.js tests/server.test.js ubuntu@129.80.59.99:/home/ubuntu/huertaluque/
 ssh -i ~/.ssh/granja ubuntu@129.80.59.99 "pm2 restart huertaluque"
 ```
+
+---
+
+## 🔔 8. ALERTAS PM2 Y TELEGRAM
+* El servidor cuenta con un monitor de Telegram (`pm2-telegram-monitor`).
+* **Aislamiento:** Está configurado para escuchar exclusivamente el proceso `granja-app`. No monitorea ni envía notificaciones cruzadas de `huertaluque`.
+
+---
+
+## 🎨 9. DIRECTRICES DE DISEÑO E IDENTIDAD VISUAL
+* **Paleta:** Botánica artesanal (fondo lino `#faf8f5`, texto carbón `#111a14` y `#222d25` con alto contraste y nitidez, acentos verdes bosque y terracota).
+* **Tipografía:** Fraunces (títulos con carácter editorial botánico) + Plus Jakarta Sans (lectura limpia).
+* **Anti-Clichés:** Prohibido spamear pills decorativos o etiquetas de tipo SaaS ("eyebrows") sobre títulos. Los pills solo se permiten como tags funcionales (ej. selección de aromáticas por encargo). Prohibido el uso de la palabra "casera" en la interfaz pública.
+
