@@ -150,101 +150,10 @@ main {
 
 .card-body {
     padding: 1.5rem;
-    position: relative;
-}
-
-.stock-badge {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 800;
-    padding: 0.25rem 0.6rem;
-    border-radius: 20px;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.stock-badge.available {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-    border: 1px solid #a5d6a7;
-}
-
-.stock-badge.out {
-    background-color: #fee2e2;
-    color: #991b1b;
-    border: 1px solid #fecaca;
-}
-
-.card.out-of-stock {
-    opacity: 0.65;
-    filter: grayscale(0.5);
-}
-
-.card.out-of-stock:hover {
-    transform: none;
-    box-shadow: var(--shadow-sm);
 }
 
 .card-body p {
     color: var(--text-muted);
-}
-
-/* Encargos / Pedidos especiales discretos */
-.custom-orders {
-    margin-top: 3.5rem;
-    margin-bottom: 2rem;
-    padding: 1.25rem 1.5rem;
-    background: #f8fafc;
-    border: 1px dashed #cbd5e1;
-    border-radius: 12px;
-    text-align: center;
-    max-width: 650px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.custom-orders h3 {
-    font-size: 1.05rem;
-    color: var(--text-muted);
-    font-weight: 600;
-    margin-bottom: 0.35rem;
-}
-
-.custom-orders p {
-    font-size: 0.9rem;
-    color: #64748b;
-    margin-bottom: 0.75rem;
-}
-
-.custom-orders-tags {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.75rem;
-}
-
-.order-tag {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    padding: 0.2rem 0.6rem;
-    border-radius: 12px;
-    font-size: 0.85rem;
-    color: #475569;
-}
-
-.btn-order-wsp {
-    display: inline-block;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #15803d;
-    text-decoration: underline;
-    transition: var(--transition);
-}
-
-.btn-order-wsp:hover {
-    color: #166534;
 }
 
 /* Care Section */
