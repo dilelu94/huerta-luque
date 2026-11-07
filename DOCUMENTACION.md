@@ -136,9 +136,17 @@ ssh -i ~/.ssh/granja ubuntu@129.80.59.99 "pm2 restart huertaluque"
 
 ---
 
-## 🔔 8. ALERTAS PM2 Y TELEGRAM
-* El servidor cuenta con un monitor de Telegram (`pm2-telegram-monitor`).
-* **Aislamiento:** Está configurado para escuchar exclusivamente el proceso `granja-app`. No monitorea ni envía notificaciones cruzadas de `huertaluque`.
+## 🔔 8. ALERTAS PM2 Y TELEGRAM (MONITORES INDEPENDIENTES)
+El servidor cuenta con dos monitores independientes corriendo en PM2 para que cada proyecto reporte por separado:
+1. **Granja Luque (`pm2-telegram-monitor`):**
+   * Ubicación: `/home/ubuntu/pm2-telegram-monitor`
+   * Escucha únicamente: `granja-app`
+   * Mensajes identificados con el contexto de la granja de codornices.
+2. **Huerta Luque (`pm2-telegram-huerta`):**
+   * Ubicación: `/home/ubuntu/pm2-telegram-huerta`
+   * Escucha únicamente: `huertaluque`
+   * Mensajes identificados con: `🌱 Alerta: Huerta Luque 🌱` (huertaluque.duckdns.org).
+   * Notifica estados de reinicio, caídas o detención de la huerta sin interferir con las alertas de la granja.
 
 ---
 
