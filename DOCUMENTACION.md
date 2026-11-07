@@ -7,7 +7,7 @@
 ## 📌 1. RESUMEN DEL PROYECTO
 
 * **Nombre del Emprendimiento:** Huerta Hogareña (Huerta Luque)
-* **Propósito:** Venta barrial directa de plantines de huerta (Tomates Reliquia, Mini Kumato Cherry, Ajíes Variados y Morrón Rojo) mediante cartel en la calle con código QR.
+* **Propósito y Filosofía:** Venta directa de plantines excedentes. Son plantas germinadas de forma casera para la huerta propia que quedaron de más y se ofrecen a los vecinos para que no se desperdicien. Principal foco en colocar los tomates.
 * **URL en vivo:** `https://huertaluque.duckdns.org/`
 * **URL de carteles imprimibles:** `https://huertaluque.duckdns.org/carteles.html`
 * **WhatsApp de contacto:** `+5491127504590` (Formato local: `11 2750-4590`).
@@ -64,32 +64,39 @@ server {
 }
 ```
 
+### Redirección de QR Antiguo en Nginx (`/etc/nginx/sites-available/granja`):
+El bloque de Granja redirige permanentemente (`301`) las peticiones a `/plantines` y `/granja` directamente a `https://huertaluque.duckdns.org/`, permitiendo que los carteles viejos ya impresos sigan funcionando sin problemas.
+
 ---
 
 ## 🛠️ 4. RESOLUCIÓN DE PROBLEMAS TÉCNICOS CRÍTICOS
 
 ### 🛑 Problema de Redirección / Service Worker Scope en Chrome:
-* **Síntoma:** Al entrar a `granjaluque.duckdns.org/plantines/` desde Chrome, el navegador redirigía a la home de Granja Luque o mostraba la pantalla rota/sin estilos, mientras que en Firefox o Incógnito funcionaba bien.
-* **Causa Raíz:** Granja Luque es una PWA (React/Vite/Workbox) que registra un Service Worker (`/sw.js`) con scope `'/'`. El Service Worker en Chrome interceptaba las navegaciones de `granjaluque.duckdns.org/plantines/` antes de salir a internet y ejecutaba el fallback SPA `index.html` de Granja Luque.
-* **Solución Implementada:**
-  1. En `granja-luque/frontend/vite.config.js`: Se agregó `navigateFallbackDenylist: [/^\/plantines/]` a la configuración de Workbox.
-  2. En `granja-luque/frontend/dist/sw.js`: Se configuró `NavigationRoute` con `{denylist: [/\/plantines/]}`.
-  3. En `granja-luque/frontend/dist/registerSW.js` e `dist/index.html`: Se agregó un script de detección inmediata: si la URL contiene `/plantines/`, desregistra los Service Workers del navegador y recarga la página de forma limpia.
-  4. En `HuertaHogare-a/index.html` y `carteles.html`: Se incluyó un script en `<head>` que desregistra Service Workers de scope raíz.
+* **Causa Raíz:** Granja Luque es una PWA que registraba un Service Worker con scope `'/'`. Al usar subdirectorios (`/plantines`), Chrome interceptaba la navegación y mostraba la home de Granja.
+* **Solución Definitiva:**
+  1. Se separó la huerta en su propio dominio: `huertaluque.duckdns.org`.
+  2. Nginx redirige los accesos viejos de `/plantines` hacia el nuevo dominio.
+  3. Cada dominio tiene su propio contexto de cookies, caché y Service Worker sin interferencias.
 
 ---
 
-## 💰 5. PRECIOS Y ESTRATEGIA BARRIAL ($ ARS)
+## 💰 5. PRECIOS, STOCK Y ENCARGOS ($ ARS)
 
 * **1 Plantín individual:** **$2.500 ARS**
 * **Combo 3 Plantines (Mix):** **$7.500 ARS**
 * **Combo 5 Plantines (Kit Huertita):** **$11.000 ARS**
 
-### Variedades en Catálogo:
-1. 🍅 **Tomate Reliquia:** Variedades antiguas de sabor dulce e intenso. Sabor a tomate de verdad.
-2. 🍅 **Mini Kumato (Cherry):** Estilo Cherry oscurito, súper dulzón. Ideal para comer directo de la planta o en ensaladas.
-3. 🌶️ **Ajíes Variados:** Variedad de ajíes picantes y dulces de diversos colores.
-4. 🫑 **Morrón Rojo:** Morrón rojo dulce de huerta, de excelente rendimiento.
+### Variedades y Disponibilidad:
+1. 🍅 **Tomate Reliquia:** `✅ 5 disponibles` - Variedades antiguas de sabor dulce e intenso. Sabor a tomate de verdad.
+2. 🍅 **Mini Kumato (Cherry):** `✅ 5 disponibles` - Estilo Cherry oscurito, súper dulzón. Ideal para comer directo de la planta o en ensaladas.
+3. 🌶️ **Ajíes Variados:** `❌ Sin stock (0)` - Variedad de ajíes dulces y picantes.
+4. 🫑 **Morrón Rojo:** `❌ Sin stock (0)` - Morrón rojo dulce de huerta.
+
+### Sección por Encargo (al fondo de la web):
+Bloque discreto para pedir tandas pequeñas a germinar por pedido vía WhatsApp:
+* 🌿 **Albahaca**
+* 🥗 **Rúcula**
+* 🥬 **Acelga**
 
 ---
 
@@ -98,10 +105,10 @@ server {
 El archivo `carteles.html` genera **4 Hojas A4** diseñadas para impresión directa (`Ctrl + P` / botón de impresión):
 
 * **Hoja 1 (A4):** Cartel de Precios de Distancia (Genérico con letras gigantes para la calle).
-* **Hoja 2 (A4):** Cartel con Código QR + WhatsApp (Diseño minimalista de ahorro de tinta).
+* **Hoja 2 (A4):** Cartel con Código QR + WhatsApp (Título: *"🌱 ARMÁ TU HUERTA"*, diseño de ahorro de tinta con QR directo a `huertaluque.duckdns.org`).
 * **Hojas 3 y 4 (A4):** Carteles Identificadores de Planta individuales.
-  * **Medida exacta de tarjeta:** **15,5 cm x 8,0 cm** (pensadas para deslizar dentro de bolsas Ziplock pequeñas de **16 cm x 8,5 cm**).
-  * **Sin precio:** Solo indican el nombre de la variedad, icono/grafico vectorial (Morrón Rojo incluye SVG de morrón rojo) y descripción.
+  * **Medida exacta:** **15,5 cm x 8,0 cm** (diseñados para deslizar dentro de bolsas Ziplock de **16 cm x 8,5 cm**).
+  * **Sin precio:** Solo indican nombre de variedad, icono/gráfico SVG en rojo y descripción, con diseño limpio para ahorro de tinta.
 
 ---
 
@@ -109,15 +116,14 @@ El archivo `carteles.html` genera **4 Hojas A4** diseñadas para impresión dire
 
 ### Ejecutar Tests Locales:
 ```bash
-cd /var/home/dilelu/repos/HuertaHogare-a
+cd /var/home/dilelu/repos/HuertaLuque
 npm test
 ```
-*(Utiliza Vitest + Supertest para validar endpoints `/health`, `/`, `/carteles.html` y contenido de WhatsApp/variedades).*
+*(Utiliza Vitest + Supertest para validar endpoints `/health`, `/`, `/carteles.html`, stock de tomates y variedades).*
 
 ### Despliegue Manual a Servidor OCI:
 ```bash
-cd /var/home/dilelu/repos/HuertaHogare-a
-scp -i ~/.ssh/granja index.html carteles.html server.js tests/server.test.js ubuntu@129.80.59.99:/home/ubuntu/huerta-hogarea/
+cd /var/home/dilelu/repos/HuertaLuque
+scp -i ~/.ssh/granja index.html styles.css carteles.html server.js tests/server.test.js ubuntu@129.80.59.99:/home/ubuntu/huerta-hogarea/
 ssh -i ~/.ssh/granja ubuntu@129.80.59.99 "pm2 restart huerta-app"
 ```
-*(Nota: El repositorio cuenta también con CI/CD automático vía GitHub Actions al pushear a `main`).*
